@@ -1,21 +1,5 @@
 services:
-  # Servico Web - Next.js
-  - type: web
-    name: promohunt-site
-    runtime: node
-    buildCommand: npm install && npm run build
-    startCommand: npm run start
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: NEXT_PUBLIC_SUPABASE_URL
-        value: https://dsrtuybzqbfvmwqrsgmk.supabase.co
-      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzcnR1eWJ6cWJmdm13cXJzZ21rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM2MjU4ODUsImV4cCI6MjA3OTIwMTg4NX0.7LwtPecdMRaj1gF1HQU2XD_h0lf5YLakOeAMTUS43vc
-      - key: API_SECRET_KEY
-        value: 8f4d9c2e1a6b7f3e5d8c9a4b2e1f6d3c
-
-  # Servico Background - Bot Telegram (scraping publico)
+  # Servico Background - Bot Telegram (scraping publico, SEM autenticacao)
   - type: worker
     name: promohunt-bot
     runtime: python
@@ -23,9 +7,6 @@ services:
     startCommand: python telegram_bot/bot_simple.py
     envVars:
       - key: NEXT_PUBLIC_SITE_URL
-        fromService:
-          name: promohunt-site
-          type: web
-          property: host
+        sync: false  # Configurar manualmente com a URL do Netlify
       - key: API_SECRET_KEY
-        value: 8f4d9c2e1a6b7f3e5d8c9a4b2e1f6d3c
+        sync: false  # Configurar manualmente
