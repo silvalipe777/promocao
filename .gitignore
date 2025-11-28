@@ -43,3 +43,6 @@ __pycache__/
 *.session-journal
 venv/
 ENV/
+
+# Local Netlify folder
+.netlify
